@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portfolio - Keerthika S</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #000;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff4b5c;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #ff4b5c;
+    }
+    .menu-toggle {
+      display: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: rgba(0,0,0,0.95);
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        border-radius: 8px;
+        padding: 1rem;
+      }
+      nav ul.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 2rem;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      letter-spacing: 2px;
+      background: linear-gradient(to right, #ff9966, #ff5e62);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    header p.welcome {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .profile-pic {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+      box-shadow: 0px 4px 20px rgba(0,0,0,0.5);
+    }
+
+    section {
+      padding: 3rem 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    section h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 3px solid #ff4b5c;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    /* About */
+    .about p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* Skills */
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .skill-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .skill-item:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Modal Popup */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #1e1e1e;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      text-align: center;
+    }
+    .modal-content h3 {
+      color: #ff4b5c;
+    }
+    .close-btn {
+      margin-top: 1rem;
+      background: #ff4b5c;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* Contact */
+    .contact-form {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+    }
+    .contact-form input, 
+    .contact-form textarea, 
+    .contact-form select,
+    .contact-form button {
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .contact-form button {
+      background: #ff4b5c;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .contact-form button:hover {
+      background: #ff9966;
+    }
+    .success-message {
+      text-align: center;
+      color: #00ff99;
+      font-weight: bold;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    /* Projects */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .project-item {
+      background: rgba(255,255,255,0.1);
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .project-item:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.3);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      background: rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Student Portfolio</div>
+    <span class="menu-toggle">☰</span>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Header -->
+  <header id="home">
+    <img src="c:\Users\Abraham\Downloads\WhatsApp Image 2025-09-06 at 22.00.32 (1).jpeg" alt="Profile" class="profile-pic">
+    <h1>Keerthika S</h1>
+    <p class="welcome">👋 Welcome to my portfolio! Aspiring Developer & Future Cybersecurity Enthusiast</p>
+    <p>BCA 2nd Year Student | Aspiring Developer</p>
+  </header>
+
+  <!-- About -->
+  <section id="about" class="about">
+    <h2>About Me</h2>
+    <p>
+      Hi, I’m <b>Keerthika S</b>, a passionate BCA 2nd Year student with strong interest in programming, web development, and networking.  
+      I have completed certificates in <b>Python, C, C++, HTML, CSS, JavaScript, and Networking</b>.  
+      My future goal is to specialize in <b>Cybersecurity</b>.
+    </p>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2>My Skills</h2>
+    <div class="skills">
+      <div class="skill-item" onclick="openModal('python')">Python</div>
+      <div class="skill-item" onclick="openModal('c')">C</div>
+      <div class="skill-item" onclick="openModal('cpp')">C++</div>
+      <div class="skill-item" onclick="openModal('html')">HTML</div>
+      <div class="skill-item" onclick="openModal('css')">CSS</div>
+      <div class="skill-item" onclick="openModal('js')">JavaScript</div>
+      <div class="skill-item" onclick="openModal('network')">Networking</div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2>My Projects</h2>
+    <div class="projects">
+      <div class="project-item">
+        <h3>Calculator App</h3>
+        <p>Built using Python for basic arithmetic operations.</p>
+      </div>
+      <div class="project-item">
+        <h3>Snake Game</h3>
+        <p>Python project demonstrating logic and OOP concepts.</p>
+      </div>
+      <div class="project-item">
+        <h3>Portfolio Website</h3>
+        <p>Created with HTML, CSS & JavaScript (this site!).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h3 id="modal-title"></h3>
+      <p id="modal-text"></p>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form class="contact-form" id="contactForm">
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email" required>
+      <select required>
+        <option value="">Select Degree</option>
+        <option>BCA</option>
+        <option>B.Com</option>
+        <option>Other</option>
+      </select>
+      <label style="margin-top:0.5rem;">Select your Skills:</label>
+      <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.5rem; margin-bottom:0.5rem;">
+        <label><input type="checkbox" value="Python"> Python</label>
+        <label><input type="checkbox" value="C"> C</label>
+        <label><input type="checkbox" value="C++"> C++</label>
+        <label><input type="checkbox" value="HTML"> HTML</label>
+        <label><input type="checkbox" value="CSS"> CSS</label>
+        <label><input type="checkbox" value="JavaScript"> JavaScript</label>
+        <label><input type="checkbox" value="Networking"> Networking</label>
+      </div>
+      <textarea rows="4" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+      <div class="success-message" id="successMessage">✅ Message sent successfully!</div>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Contact: <b>hidup123@gmail.com</b> | © 2025 Keerthika S | All Rights Reserved</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Navbar toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('nav ul');
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+
+    // Modal data
+    const skillInfo = {
+      python: "I built a Calculator App and Snake Game using Python. Python is important for problem solving and app development.",
+      c: "I practiced logic building with C language. It helps in understanding programming basics.",
+      cpp: "With C++, I learned Object-Oriented Programming and built small projects.",
+      html: "Using HTML, CSS, and JS, I created a website project and this portfolio.",
+      css: "With CSS, I designed beautiful, responsive layouts.",
+      js: "I used JavaScript for interactivity in my projects, including my portfolio site.",
+      network: "I studied Networking concepts and earned a certificate in Networking."
+    };
+
+    function openModal(skill) {
+      document.getElementById("modal-title").innerText = skill.toUpperCase();
+      document.getElementById("modal-text").innerText = skillInfo[skill];
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    // Contact form submission
+    const contactForm = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      successMessage.style.display = 'block';
+      contactForm.reset();
+      setTimeout(() => { successMessage.style.display = 'none'; }, 4000);
+    });
+  </script>
+</body>
+</html>
